@@ -21,11 +21,11 @@ jobs:
 
       - name: Build CLI
         run: |
-          cd util/formula_templater && go build
+          cd utils/formula_templater && go build
 
       - name: Generate new formula
         run: |
-          ./util/formula_templater/formula_templater \
+          ./utils/formula_templater/formula_templater \
             ${{github.event.client_payload.name}} \
             ${{github.event.client_payload.release_url}} \
             ${{github.event.client_payload.sha}} \
