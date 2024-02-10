@@ -1,0 +1,46 @@
+name: Update Formula in Tap
+run-name: Update ${{ github.event.client_payload.name }} to ${{ github.event.client_payload.version }}
+
+on:
+  repository_dispatch:
+    types:
+      - version-updated
+
+jobs:
+  update-formula:
+    name: Update Formula
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: utils/version_templater/go.mod
+
+      - name: Build CLI
+        run: |
+          cd util/formula_templater && go build
+
+      - name: Generate new formula
+        run: |
+          ./util/formula_templater/formula_templater \
+            ${{github.event.client_payload.name}} \
+            ${{github.event.client_payload.release_url}} \
+            ${{github.event.client_payload.sha}} \
+            ${{github.event.client_payload.version}} \
+            ${{github.event.client_payload.visibility}} > ./Formula/${{github.event.client_payload.name}}.rb
+
+      - name: Publish Change
+        run: |
+          git config user.name xcg-automtation
+          git config user.email automtation@xeneos.com
+          
+          git add Formula/*.rb
+          
+          git commit -m "Bump ${{ github.event.client_payload.name }} to ${{ github.event.client_payload.version }}"
+          
+          git pull --rebase
+
+          git push

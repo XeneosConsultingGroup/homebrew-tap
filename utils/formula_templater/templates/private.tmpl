@@ -1,0 +1,22 @@
+require "formula"
+require_relative "../custom_download_strategy.rb"
+class {{ .Name }} < Formula
+  desc "{{ .Product }}"
+  homepage "https://software.xeneos.com/internal/cli"
+  version "{{ .Version }}"
+
+  if OS.mac? && Hardware::CPU.arm?
+    url "{{ .ReleaseUrl }}", :using => GitHubPrivateRepositoryReleaseDownloadStrategy
+    sha256 "{{ .SHA256 }}"
+  end
+
+  conflicts_with "{{ .Product }}"
+
+  def install
+    bin.install "{{ .Product }}"
+  end
+
+  test do
+    system "#{bin}/{{ .Product }} --version"
+  end
+end
