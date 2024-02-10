@@ -1,3 +1,5 @@
+require "formula"
+require_relative "../custom_download_strategy.rb"
 class Xcg < Formula
   desc "xcg"
   homepage "https://software.xeneos.com/internal/cli"
