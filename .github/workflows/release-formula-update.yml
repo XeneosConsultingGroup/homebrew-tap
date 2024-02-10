@@ -17,7 +17,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: utils/version_templater/go.mod
+          go-version-file: utils/formula_templater/go.mod
 
       - name: Build CLI
         run: |
