@@ -59,12 +59,6 @@ func main() {
 	version := os.Args[i+4]
 	visibility := os.Args[i+5]
 
-	fmt.Println("product: ", product)
-	fmt.Println("releaseUrl: ", releaseUrl)
-	fmt.Println("sha: ", sha)
-	fmt.Println("version: ", version)
-	fmt.Println("visibility: ", visibility)
-
 	err := printFormula(product, releaseUrl, sha, version, visibility, os.Stdout)
 	if err != nil {
 		fmt.Println("Error: ", err)
