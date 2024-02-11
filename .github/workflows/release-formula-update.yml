@@ -34,7 +34,7 @@ jobs:
 
       - name: Publish Change
         run: |
-          git config user.name xcg-automtation
+          git config user.name xcg-automation
           git config user.email automation@xeneos.com
           
           git add Formula/*.rb
